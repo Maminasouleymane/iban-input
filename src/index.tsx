@@ -1,7 +1,5 @@
 import 'react-app-polyfill/ie11';
 
-import * as ReactDOM from 'react-dom';
-
 import React, { useEffect, useState } from 'react'
 
 export interface IbanProps{
