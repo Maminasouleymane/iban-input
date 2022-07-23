@@ -11,7 +11,7 @@ export interface IbanProps{
 }
 
 const IbanInput = (props: IbanProps) => {
-    const { value = '', ibanFormat, onChange, onBlur, onPaste, ...rest } = props;
+    const { value = '', ibanFormat, onChange, onBlur, onPaste } = props;
     const [ibanVal, setIbanVal] = useState<string>('');
     const [blur, setBlur] = useState<boolean>(false);
 
