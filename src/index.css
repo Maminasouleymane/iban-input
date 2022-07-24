@@ -1,40 +1,21 @@
-.textfield {
-    position: relative;
-  }
-  .textfield__input {
-    border: 1px solid gray;
-    display: flex;
-    align-items: center;
-    padding: 10px;
-  }
-  .textfield__input-field {
-    width: 100%;
-    border: 0px;
-    padding-left: 10px;
-    padding-top: 4px;
-  }
-  .textfield__input-field:focus {
-    outline: none;
-  }
-  .textfield__input-adornment {
-    padding-left: 10px;
-  }
-  .textfield__input:focus {
-    outline: none;
-  }
-  .textfield__input:focus + .textfield__adornment-placeholder {
-    display: none;
-  }
-  .textfield__adornment {
-    position: absolute;
-    top: 8px;
-    left: 12px;
-  }
-  .textfield__adornment-text {
-    color: 'black';
-  }
-  .textfield__adornment-placeholder {
-    margin-left: 5px;
-    color: 'black';
-  }
-  
+.container {
+  margin: auto;
+  position: relative;
+  display: inline-block;
+  width: 13%;
+}
+
+.input_field  {
+  width: 100%;
+  padding-left: 35px;
+  font-size: 12px;
+  font-family: 'Times New Roman', Times, serif;
+}
+
+.input_adornment  {
+  position: absolute;
+  padding-top: 4px;
+  font-size: 12px;
+  top: 0;
+  left: 10px;
+}

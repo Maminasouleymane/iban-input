@@ -5,14 +5,17 @@ import React, { useEffect, useState } from 'react'
 export interface IbanProps{
     ibanFormat: string;
     value?: string;
+    style?: any;
+    placeholder?: string;
     onChange?: (e: string) => void;
     onBlur?: (e: string) => void;
     onPaste?: (e: string) => void;
 }
 
 const IbanInput = (props: IbanProps) => {
-    const { value = '', ibanFormat, onChange, onBlur, onPaste } = props;
+    const { value = '', ibanFormat, onChange, onBlur, onPaste, placeholder,style} = props;
     const [ibanVal, setIbanVal] = useState<string>('');
+    const [key, setKey] = useState(undefined);
     const [blur, setBlur] = useState<boolean>(false);
 
     // the country code 
@@ -31,12 +34,11 @@ const IbanInput = (props: IbanProps) => {
         const areTheSame = theSeparator.split('').every(char => char === theSeparator[0])
         if(theSeparator.length > 1 && !areTheSame){
             alert("your ibanFormat is not valid, please double check your ibanFormat, and/or check the docs for more details")
-            return;
+            return'';
         }
         
         // we check if the separator is a space
         if (theSeparator === ' '){
-            console.log('yes its a space')
             return " "
         }
 
@@ -84,6 +86,7 @@ const IbanInput = (props: IbanProps) => {
             .split('')
             .map((currentCharacter, index) => {
                 if (separatorPositions.includes(index)) {
+                    // the separator will be added automatically without the need of the user to manually type it
                     return separator(ibanFormat) + `${currentCharacter}`;
                 }
                 return currentCharacter;
@@ -92,11 +95,18 @@ const IbanInput = (props: IbanProps) => {
         return input;
     };
 
-    const handleChange = (eventValue: React.ChangeEvent<HTMLInputElement>) => {
+    const handleChange = async(eventValue: React.ChangeEvent<HTMLInputElement>) => {
         const val = formatInput(eventValue.target.value);
-        setIbanVal(val);
-        const eventValueWithPrefix = eventValue ? prefix + eventValue.target.value.replace(/-/g, '') : '';
+        const caretStart = eventValue.target.selectionStart ?? 0;
+        const caretEnd = eventValue.target.selectionEnd ?? 0;
+        const cursorPosition = key !== 'Delete' && key !== 'Backspace' && val.charAt(val.length - 2) === separator(ibanFormat);
+        await setIbanVal(val);
+        const eventValueWithPrefix = eventValue ? prefix + eventValue.target.value.replaceAll(separator(ibanFormat), '') : '';
         onChange?.(eventValueWithPrefix);
+        eventValue.target.setSelectionRange(
+            cursorPosition ? caretStart + 1 : caretStart,
+            cursorPosition ? caretEnd + 1 : caretEnd
+        );
     };
 
     const handleBlur = () => {
@@ -114,19 +124,18 @@ const IbanInput = (props: IbanProps) => {
         value && formatValue(value);
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [value]);
-
+    
     return (
-        <div className={`textfield__input ${blur && "textfield__input--focused"}`}>
-            <div className="textfield__input-adornment">
-                <span className="textfield__adornment-text">{prefix}</span>
-            </div>
-            <input
-                className="textfield__input-field"
-                placeholder="Some placeholder text"
+        <div className="container" style={style}>
+                    <span className="input_adornment">{prefix}</span>
+        <input
+                className="input_field"
+                placeholder={placeholder}
                 maxLength={ibanFormat.length - 2}
                 value={ibanVal}
                 onPaste={handlePaste}
                 onChange={handleChange}
+                onKeyDown={(event: any) => setKey(event.key)}
                 onBlur={handleBlur}
                 onFocus={() => setBlur(!blur)}
             />
