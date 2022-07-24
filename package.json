@@ -1,8 +1,22 @@
 {
-  "version": "0.1.2",
+  "name": "iban-format",
+  "author": "Mamina Soulymane <mamina22082012@gmail.com>",
+  "version": "0.1.3",
   "license": "MIT",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
+  "homepage": "https://github.com/Maminasouleymane/iban-input",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Maminasouleymane/iban-input.git"
+  },
+  "keywords": [
+    "react",
+    "react-component",
+    "iban",
+    "mask",
+    "iban-checker"
+  ],
   "files": [
     "dist",
     "src"
@@ -35,8 +49,6 @@
     "singleQuote": true,
     "trailingComma": "es5"
   },
-  "name": "iban-format",
-  "author": "mamina22082012@gmail.com",
   "module": "dist/iban-format.esm.js",
   "size-limit": [
     {
